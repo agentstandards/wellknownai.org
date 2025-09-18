@@ -1,12 +1,62 @@
-<!doctype html><html lang="zh-CN"><head>
+<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WellKnownAI · Registry & Tools</title>
-<style>body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial;max-width:960px;margin:40px auto;padding:0 16px;line-height:1.6}code,pre{background:#f6f8fa;border-radius:6px;padding:2px 6px}pre{padding:12px}.footer{margin-top:40px;padding-top:12px;border-top:1px solid #eee;color:#666;font-size:14px}</style>
-</head><body>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial;max-width:980px;margin:40px auto;padding:0 16px;line-height:1.6}
+code,pre{background:#f6f8fa;border-radius:6px;padding:2px 6px}pre{padding:12px;overflow:auto}
+table{border-collapse:collapse;width:100%}th,td{border:1px solid #e5e7eb;padding:8px;text-align:left}
+.footer{margin-top:40px;padding-top:12px;border-top:1px solid #eee;color:#666;font-size:14px}
+.langbar{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-bottom:10px}
+.langbar button{border:1px solid #ddd;background:#fff;padding:4px 10px;border-radius:6px;cursor:pointer}
+.langbar button.active{background:#111;color:#fff;border-color:#111}
+[data-lang]{display:none}
+.lang-en [data-lang="en"]{display:block}
+.lang-zh [data-lang="zh"]{display:block}
+</style></head><body class="lang-en">
+<div class="langbar">
+  <span>Language:</span>
+  <button id="btn-en">EN</button>
+  <button id="btn-zh">中文</button>
+</div>
+<div data-lang="en">
+
+<h1>WellKnownAI — Registry & Tools (MCP/agents.json compatible)</h1>
+<p>Goal: host AI Manifest field definitions, examples, and public snapshots.</p>
+<h2>AI Manifest (v0.1) — field quicklist</h2>
+<ul><li>manifest_version, provider, spec.openapi_url, spec.schemas[]</li>
+<li>servers[], capabilities[], resources[], prompts[]</li>
+<li>auth.jwks_uri, receipts.signature[], contact.*</li></ul>
+<p><strong>Example entry</strong></p>
+<pre><code>{
+  "domain": "example.com",
+  "manifest": "https://example.com/.well-known/ai.json",
+  "openapi": "https://api.example.com/openapi.yaml",
+  "jwks_uri": "https://example.com/.well-known/jwks.json",
+  "servers": [{"type":"rest","url":"https://api.example.com"}],
+  "capabilities": ["search","vector.upsert","invoice.create"],
+  "status": "active"
+}</code></pre>
+<p>Cross links: <a href="https://ai-manifest.org">AI Manifest</a> · <a href="https://agentpki.org">AgentPKI</a> · <a href="https://agenturn.org">AgentURN</a></p>
+<h2>Registry & Downloads</h2>
+<ul><li><a href="https://github.com/agentstandards/wellknownai.org/releases">Releases (snapshots & diffs)</a></li></ul>
+<h2>Tools / Examples</h2>
+<pre><code>// OpenAPI fragment
+paths:
+  /search:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SearchInput" }</code></pre>
+</div>
+<div data-lang="zh">
+
 <h1>WellKnownAI — 发现与注册表（兼容 MCP/agents.json）</h1>
-<p>目标：承接 <a href="https://ai-manifest.org">AI Manifest</a> 的技术细节与公开下载/引用。</p>
-<h2>AI Manifest 栏目（字段速览 v0.1）</h2>
-<ul><li>manifest_version, provider, spec.openapi_url, spec.schemas[]</li><li>servers[], capabilities[], resources[], prompts[]</li><li>auth.jwks_uri, receipts.signature[], contact.*</li></ul>
+<p>目标：承接 AI Manifest 的字段说明、示例与公开快照。</p>
+<h2>AI Manifest（v0.1）字段速览</h2>
+<ul><li>manifest_version, provider, spec.openapi_url, spec.schemas[]</li>
+<li>servers[], capabilities[], resources[], prompts[]</li>
+<li>auth.jwks_uri, receipts.signature[], contact.*</li></ul>
 <p><strong>示例条目</strong></p>
 <pre><code>{
   "domain": "example.com",
@@ -17,12 +67,11 @@
   "capabilities": ["search","vector.upsert","invoice.create"],
   "status": "active"
 }</code></pre>
-<p>互链：<a href="https://agentpki.org">AgentPKI</a> · <a href="https://agenturn.org">AgentURN</a></p>
-<h2>Registry 说明与下载位</h2>
-<p>字段解释、示例与快照通过 GitHub Releases 公布（零 PII，允许镜像）。</p>
-<ul><li><a href="https://github.com/agentstandards/wellknownai.org/releases">Releases（快照与差分占位）</a></li></ul>
+<p>互链：<a href="https://ai-manifest.org">AI Manifest</a> · <a href="https://agentpki.org">AgentPKI</a> · <a href="https://agenturn.org">AgentURN</a></p>
+<h2>注册表与下载位</h2>
+<ul><li><a href="https://github.com/agentstandards/wellknownai.org/releases">Releases（快照与差分）</a></li></ul>
 <h2>Tools / Examples</h2>
-<pre><code>// OpenAPI fragment
+<pre><code>// OpenAPI 片段
 paths:
   /search:
     post:
@@ -30,6 +79,25 @@ paths:
         content:
           application/json:
             schema: { $ref: "#/components/schemas/SearchInput" }</code></pre>
-<div class="footer"><p>Last updated: <span id="d"></span></p><p>公共层永久免费、零 PII、不排名/不竞价、允许镜像；达到阈值走多方托管。</p><p>Contact: agentstandards@gmail.com · GitHub: https://github.com/agentstandards</p></div>
-<script>document.getElementById('d').textContent=new Date().toISOString().slice(0,10);</script>
+</div>
+<div class="footer"><p>Last updated: <span id="d"></span></p></div>
+<script>
+(function(){
+  const LS='ai-lang';
+  const pref = localStorage.getItem(LS);
+  let lang = pref || 'en' || ((navigator.language||'en').toLowerCase().startsWith('zh')?'zh':'en');
+  set(lang);
+  document.getElementById('btn-en').onclick=()=>set('en');
+  document.getElementById('btn-zh').onclick=()=>set('zh');
+  function set(l){
+    document.body.classList.remove('lang-en','lang-zh');
+    document.body.classList.add('lang-'+l);
+    document.documentElement.lang = (l==='zh'?'zh-CN':'en');
+    localStorage.setItem(LS,l);
+    document.getElementById('btn-en').classList.toggle('active', l==='en');
+    document.getElementById('btn-zh').classList.toggle('active', l==='zh');
+  }
+  document.getElementById('d').textContent=new Date().toISOString().slice(0,10);
+})();
+</script>
 </body></html>
