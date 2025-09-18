@@ -1,0 +1,1 @@
+Public layer is free, zero‑PII, no ranking or pay‑to‑play. Mirroring allowed. Snapshots and hashchain for auditability. Foundation/multi‑stakeholder custody if adoption threshold is met. Contact: agentstandards@gmail.com · GitHub: https://github.com/agentstandards
