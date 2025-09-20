@@ -41,9 +41,10 @@ paths:
 <div class="footer"><p>Last updated: <span id="d"></span></p></div>
 <script>document.getElementById('d').textContent=new Date().toISOString().slice(0,10);</script>
 
-<h2 id="getting-started">5 分钟上手（服务方）</h2>
+
+<h2 id="getting-started">5-minute Getting Started (Provider)</h2>
 <ol>
-  <li>在你的域名下新增 <code>/.well-known/ai.json</code>（最小示例）：
+  <li>Create <code>/.well-known/ai.json</code> (minimal example):
     <pre><code>{
   "manifest_version": "0.1",
   "provider": { "name": "Your Inc.", "homepage": "https://your-domain" },
@@ -53,7 +54,7 @@ paths:
   "auth": { "jwks_uri": "https://your-domain/.well-known/jwks.json", "schemes": ["bearer"] }
 }</code></pre>
   </li>
-  <li>发布 JWKS：<code>/.well-known/jwks.json</code>（占位示例；生产请使用真实公钥）：
+  <li>Publish JWKS at <code>/.well-known/jwks.json</code> (placeholder for demo; use a real public key in production):
     <pre><code>{
   "keys": [{
     "kty": "RSA",
@@ -65,15 +66,12 @@ paths:
   }]
 }</code></pre>
   </li>
-  <li>（可选）发布 CRL：<code>/.well-known/ai-crl.json</code>，用于撤销/合规标记。</li>
-  <li>本地校验（使用本仓库提供的 CLI 脚本）：
-    <pre><code>node ai-manifest-kit/scripts/validate-ai.mjs --file .well-known/ai.json --out _reports/ai_local.json
-node ai-manifest-kit/scripts/validate-jwks.mjs --file .well-known/jwks.json --out _reports/jwks_local.json
-node ai-manifest-kit/scripts/validate-crl.mjs  --file .well-known/ai-crl.json --out _reports/crl_local.json</code></pre>
+  <li>(Optional) Publish CRL at <code>/.well-known/ai-crl.json</code> to revoke keys or mark compliance status.</li>
+  <li>Validate locally using the CLI provided in this repo:
+    <pre><code>node ai-manifest-kit/scripts/validate-ai.mjs --file .well-known/ai.json --out _reports/ai_local.json\nnode ai-manifest-kit/scripts/validate-jwks.mjs --file .well-known/jwks.json --out _reports/jwks_local.json\nnode ai-manifest-kit/scripts/validate-crl.mjs  --file .well-known/ai-crl.json --out _reports/crl_local.json</code></pre>
   </li>
-  <li>CI 接入：本仓库已包含 validate-registry.yml / validate-registry-remote.yml，registry 变更会自动校验。</li>
-  <li>（可选）要加入公共目录，请在 wellknownai.org 仓库的 <code>registry.json</code> 提 PR，或参考页面上的“Registry Viewer”。</li>
+  <li>Wire CI: This repo ships validate-registry.yml and validate-registry-remote.yml. Changes to registry.json are validated automatically.</li>
+  <li>(Optional) To be listed, open a PR to add your domain to wellknownai.org's <code>registry.json</code> (see Registry Viewer on the site).</li>
 </ol>
-<p>注意：所有外链推荐使用 HTTPS，缓存建议设置 ETag / Last-Modified / Cache-Control: max-age=600+；JWKS 轮换使用 kid，先加后删，保持重叠窗口 ≥7 天。</p>
-
+<p>Notes: Use HTTPS and absolute URLs. Send ETag and Last-Modified and a Cache-Control (e.g., max-age=600+). Rotate JWKS by <code>kid</code> with an overlap window (≥ 7 days): add new key first, then remove the old one.</p>
 </body></html>
