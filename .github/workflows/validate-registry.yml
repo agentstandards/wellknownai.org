@@ -1,0 +1,26 @@
+name: Validate Registry
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install deps
+        run: npm i ajv ajv-formats
+      - name: Validate registry.json
+        run: |
+          node ai-manifest-kit/scripts/validate-registry.mjs --file registry.json --out _reports/registry_validate.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: registry-validate-reports
+          path: _reports/*.json
+      - name: Summary
+        run: |
+          echo "## Registry Validation" >> $GITHUB_STEP_SUMMARY
+          cat _reports/registry_validate.json | sed 's/^/    /' >> $GITHUB_STEP_SUMMARY

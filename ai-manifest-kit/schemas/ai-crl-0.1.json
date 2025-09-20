@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AI CRL v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["revoked", "updated_at"],
+  "properties": {
+    "issuer": { "type": "string", "format": "uri" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "revoked": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kid", "reason", "revoked_at"],
+        "properties": {
+          "kid": { "type": "string", "minLength": 1 },
+          "reason": { "type": "string", "enum": ["compromise", "retire", "ownership_change", "abuse", "opt_out", "other"] },
+          "revoked_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    }
+  }
+}
