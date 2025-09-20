@@ -1,0 +1,41 @@
+name: Comment validation summary
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths: [ 'registry.json', 'entries/*.json' ]
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Install deps
+        run: npm i ajv ajv-formats node-fetch@^3 https-proxy-agent socks-proxy-agent
+      - name: Build registry (entries mode)
+        if: hashFiles('entries/*.json') != ''
+        run: node tools/merge_entries.mjs
+      - name: Schema check
+        run: node ai-manifest-kit/scripts/validate-registry.mjs --file registry.json --out _reports/registry_validate_pr.json || true
+      - name: Remote check (active only)
+        run: node tools/check_registry_remote.mjs registry.json || true
+      - name: Post comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            function read(p){ try{return JSON.parse(fs.readFileSync(p,'utf8'));}catch{ return null; } }
+            const sch = read('_reports/registry_validate_pr.json');
+            const list = fs.existsSync('_reports') ? fs.readdirSync('_reports').filter(f=>/^ai_|^jwks_/.test(f)) : [];
+            const rows=[];
+            if (sch) rows.push(`Schema: ${sch.ok ? 'OK ✅' : 'Issues ❌'}`);
+            if (list.length) rows.push(`Remote checks: ${list.length} report(s) generated (only for status=active)`);
+            const body = rows.length ? rows.join('\n') : 'No reports found.';
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `Validation summary:\n\n${body}\n\nNotes: inactive entries skip remote checks; keep registry.json domain-asc sorted.`
+            });
