@@ -1,34 +1,66 @@
 [
-{
-"domain": "agentpki.org",
-"manifest": "https://agentpki.org/.well-known/ai.json",
-"jwks_uri": "https://agentpki.org/.well-known/jwks.json",
-"servers": [{ "type": "rest", "url": "https://agentpki.org" }],
-"capabilities": ["schemas.list", "urn:agent:skill:agentpki.org:reference.v1"],
-"status": "inactive"
-},
-{
-"domain": "agenturn.org",
-"manifest": "https://agenturn.org/.well-known/ai.json",
-"jwks_uri": "https://agenturn.org/.well-known/jwks.json",
-"servers": [{ "type": "rest", "url": "https://agenturn.org" }],
-"capabilities": ["schemas.list", "urn:agent:skill:agenturn.org:reference.v1"],
-"status": "inactive"
-},
-{
-"domain": "ai-manifest.org",
-"manifest": "https://ai-manifest.org/.well-known/ai.json",
-"jwks_uri": "https://ai-manifest.org/.well-known/jwks.json",
-"servers": [{ "type": "rest", "url": "https://ai-manifest.org" }],
-"capabilities": ["schemas.list", "urn:agent:skill:ai-manifest.org:reference.v1"],
-"status": "active"
-},
-{
-"domain": "wellknownai.org",
-"manifest": "https://wellknownai.org/.well-known/ai.json",
-"jwks_uri": "https://wellknownai.org/.well-known/jwks.json",
-"servers": [{ "type": "rest", "url": "https://wellknownai.org" }],
-"capabilities": ["schemas.list", "urn:agent:skill:wellknownai.org:reference.v1"],
-"status": "active"
-}
+  {
+    "domain": "agentpki.org",
+    "manifest": "https://agentpki.org/.well-known/ai.json",
+    "jwks_uri": "https://agentpki.org/.well-known/jwks.json",
+    "servers": [
+      {
+        "type": "rest",
+        "url": "https://agentpki.org"
+      }
+    ],
+    "capabilities": [
+      "schemas.list",
+      "urn:agent:skill:agentpki.org:reference.v1"
+    ],
+    "status": "active"
+  },
+  {
+    "domain": "agenturn.org",
+    "manifest": "https://agenturn.org/.well-known/ai.json",
+    "jwks_uri": "https://agenturn.org/.well-known/jwks.json",
+    "servers": [
+      {
+        "type": "rest",
+        "url": "https://agenturn.org"
+      }
+    ],
+    "capabilities": [
+      "schemas.list",
+      "urn:agent:skill:agenturn.org:reference.v1"
+    ],
+    "status": "inactive"
+  },
+  {
+    "domain": "ai-manifest.org",
+    "manifest": "https://ai-manifest.org/.well-known/ai.json",
+    "jwks_uri": "https://ai-manifest.org/.well-known/jwks.json",
+    "servers": [
+      {
+        "type": "rest",
+        "url": "https://ai-manifest.org"
+      }
+    ],
+    "capabilities": [
+      "schemas.list",
+      "urn:agent:skill:ai-manifest.org:reference.v1"
+    ],
+    "status": "active"
+  },
+  {
+    "domain": "wellknownai.org",
+    "manifest": "https://wellknownai.org/.well-known/ai.json",
+    "jwks_uri": "https://wellknownai.org/.well-known/jwks.json",
+    "servers": [
+      {
+        "type": "rest",
+        "url": "https://wellknownai.org"
+      }
+    ],
+    "capabilities": [
+      "schemas.list",
+      "urn:agent:skill:wellknownai.org:reference.v1"
+    ],
+    "status": "active"
+  }
 ]
