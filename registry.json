@@ -1,0 +1,18 @@
+[
+  {
+    "domain": "ai-manifest.org",
+    "manifest": "https://ai-manifest.org/.well-known/ai.json",
+    "jwks_uri": "https://ai-manifest.org/.well-known/jwks.json",
+    "servers": [
+      {
+        "type": "rest",
+        "url": "https://ai-manifest.org"
+      }
+    ],
+    "capabilities": [
+      "schemas.list",
+      "urn:agent:skill:ai-manifest.org:reference.v1"
+    ],
+    "status": "active"
+  }
+]
