@@ -1,0 +1,11 @@
+{
+  "issuer": "https://wellknownai.org",
+  "updated_at": "2025-01-10T00:00:00Z",
+  "revoked": [
+    {
+      "kid": "2025-01-01-rsa",
+      "reason": "compromise",
+      "revoked_at": "2025-01-10T00:00:00Z"
+    }
+  ]
+}

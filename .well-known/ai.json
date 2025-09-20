@@ -1,0 +1,45 @@
+{
+  "manifest_version": "0.1",
+  "provider": {
+    "name": "AI Manifest (Reference)",
+    "description": "Reference-only ai.json for examples; no production APIs.",
+    "homepage": "https://wellknownai.org"
+  },
+  "spec": {
+    "schemas": [
+      "https://wellknownai.org/schemas/ai-manifest-0.1.json"
+    ]
+  },
+  "servers": [
+    {
+      "type": "rest",
+      "url": "https://wellknownai.org"
+    }
+  ],
+  "capabilities": [
+    "urn:agent:skill:wellknownai.org:reference.v1",
+    "schemas.list"
+  ],
+  "resources": [
+    {
+      "id": "ai_schema",
+      "uri": "https://wellknownai.org/schemas/ai-manifest-0.1.json",
+      "description": "AI Manifest v0.1 JSON Schema"
+    }
+  ],
+  "auth": {
+    "jwks_uri": "https://wellknownai.org/.well-known/jwks.json",
+    "schemes": [
+      "none"
+    ]
+  },
+  "receipts": {
+    "signature": [
+      "JWS"
+    ]
+  },
+  "contact": {
+    "email": "agentstandards@gmail.com",
+    "url": "https://github.com/agentstandards"
+  }
+}

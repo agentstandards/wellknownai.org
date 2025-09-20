@@ -1,0 +1,12 @@
+{
+  "keys": [
+    {
+      "kty": "RSA",
+      "kid": "2025-01-01-rsa",
+      "use": "sig",
+      "alg": "RS256",
+      "n": "base64url...",
+      "e": "AQAB"
+    }
+  ]
+}
