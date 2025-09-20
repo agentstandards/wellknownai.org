@@ -1,0 +1,25 @@
+name: Build registry from entries
+on:
+  pull_request:
+    paths: [ 'entries/*.json', 'tools/merge_entries.mjs' ]
+  push:
+    branches: [ main ]
+    paths: [ 'entries/*.json' ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Merge entries -> registry.json
+        run: node tools/merge_entries.mjs
+      - name: Validate merged registry
+        run: node ai-manifest-kit/scripts/validate-registry.mjs --file registry.json --out _reports/registry_validate_build.json
+      - uses: actions/upload-artifact@v4
+        with: { name: registry-build, path: _reports/*.json }
+      - name: Auto-commit on push to main
+        if: github.event_name == 'push'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore(registry): build registry.json from entries'

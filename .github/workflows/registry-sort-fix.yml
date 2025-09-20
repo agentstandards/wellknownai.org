@@ -16,8 +16,8 @@ jobs:
         with: { ref: ${{ github.event.inputs.branch }} }
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
-      - name: Sort safely
-        run: node tools/sort_registry_safe.mjs --file registry.json --out registry.json
+      - name: Sort registry.json
+        run: node tools/sort_registry.mjs > registry.json
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'chore(registry): sort registry.json'
