@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WellKnownAI Registry Entry v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["domain", "manifest", "jwks_uri", "servers", "capabilities", "status"],
+  "properties": {
+    "domain": { "type": "string", "pattern": "^[a-z0-9.-]+$" },
+    "manifest": { "type": "string", "format": "uri" },
+    "openapi": { "type": "string", "format": "uri" },
+    "jwks_uri": { "type": "string", "format": "uri" },
+    "servers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "url"],
+        "properties": {
+          "type": { "type": "string", "enum": ["rest", "mcp", "ws", "sse"] },
+          "url": { "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "capabilities": { "type": "array", "items": { "type": "string" } },
+    "status": { "type": "string", "enum": ["active", "inactive", "deprecated"] }
+  }
+}
