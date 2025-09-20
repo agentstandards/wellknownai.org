@@ -1,0 +1,39 @@
+name: Get listed (Add your domain)
+description: Request to add your domain to the registry
+labels: [registry]
+body:
+  - type: input
+    id: domain
+    attributes: { label: Domain, placeholder: your-domain.com }
+    validations: { required: true }
+  - type: input
+    id: manifest
+    attributes: { label: ai.json URL, placeholder: https://your-domain.com/.well-known/ai.json }
+    validations: { required: true }
+  - type: input
+    id: jwks
+    attributes: { label: JWKS URL, placeholder: https://your-domain.com/.well-known/jwks.json }
+    validations: { required: true }
+  - type: input
+    id: openapi
+    attributes: { label: OpenAPI URL (optional), placeholder: https://your-domain.com/openapi.yaml }
+  - type: textarea
+    id: servers
+    attributes:
+      label: Servers (JSON array)
+      description: Example: [{"type":"rest","url":"https://api.your-domain.com"}]
+      placeholder: '[{"type":"rest","url":"https://api.your-domain.com"}]'
+    validations: { required: true }
+  - type: textarea
+    id: capabilities
+    attributes:
+      label: Capabilities (JSON array)
+      placeholder: '["schemas.list","urn:agent:skill:your-domain:example.v1"]'
+    validations: { required: true }
+  - type: dropdown
+    id: status
+    attributes:
+      label: Status
+      options: [inactive, active]
+      description: First time recommend "inactive"; switch to "active" after remote checks pass.
+    validations: { required: true }
