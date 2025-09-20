@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WellKnownAI · Registry Viewer</title>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial;max-width:1100px;margin:40px auto;padding:0 16px;line-height:1.6}
+table{border-collapse:collapse;width:100%}th,td{border:1px solid #e5e7eb;padding:8px;text-align:left;vertical-align:top}
+code{background:#f6f8fa;border-radius:4px;padding:1px 4px}
+.badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:12px}
+.ok{background:#e6ffed;color:#067d26}.warn{background:#fffbe6;color:#8a6d3b}.err{background:#ffe6e6;color:#9e1c1c}
+.small{font-size:12px;color:#555}
+</style></head><body>
+<h1>Registry Viewer</h1>
+<p class="small">Data source: <code>/registry.json</code>. This is a static viewer for quick browse & copy.</p>
+<div id="app">Loading...</div>
+<script>
+async function main(){
+  const el=document.getElementById('app');
+  try{
+    const r = await fetch('./registry.json', { cache:'no-store' });
+    if(!r.ok) throw new Error('fetch registry.json '+r.status);
+    const data = await r.json();
+    const items = Array.isArray(data) ? data : (Array.isArray(data.items)?data.items:[]);
+    if(!items.length){ el.textContent='No entries.'; return; }
+    const rows = items.map(x=>{
+      const servers = Array.isArray(x.servers)?x.servers.map(s=>`${s.type}: <a href="${s.url}">${s.url}</a>`).join('<br>'):'';
+      const caps = Array.isArray(x.capabilities)?x.capabilities.join('<br>'):'';
+      const openapi = x.openapi ? `<a href="${x.openapi}">openapi</a>` : '';
+      return `<tr>
+        <td><strong>${x.domain||''}</strong><div class="small">${x.status||''}</div></td>
+        <td><a href="${x.manifest}">ai.json</a><br><a href="${x.jwks_uri}">jwks.json</a><br>${openapi}</td>
+        <td>${servers}</td>
+        <td>${caps}</td>
+      </tr>`;
+    }).join('\n');
+    el.innerHTML = `<table><thead><tr><th>Domain</th><th>Links</th><th>Servers</th><th>Capabilities</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }catch(e){
+    el.innerHTML = '<span class="badge err">Error</span> '+e.message;
+  }
+}
+main();
+</script>
+</body></html>

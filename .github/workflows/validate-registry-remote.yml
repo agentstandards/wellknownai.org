@@ -1,0 +1,33 @@
+name: Validate Registry (Schema + Remote)
+on:
+  pull_request:
+    paths: [ 'registry.json', '.github/workflows/validate-registry-remote.yml', 'ai-manifest-kit/**', 'tools/**' ]
+  push:
+    branches: [ main ]
+    paths: [ 'registry.json' ]
+  schedule:
+    - cron: '19 2 * * *' # UTC夜间
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Install deps
+        run: npm i ajv ajv-formats node-fetch@^3 https-proxy-agent socks-proxy-agent
+      - name: Schema check
+        run: node ai-manifest-kit/scripts/validate-registry.mjs --file registry.json --out _reports/registry_validate.json
+      - name: Remote check (ai.json + jwks.json per entry)
+        run: node tools/check_registry_remote.mjs registry.json
+      - uses: actions/upload-artifact@v4
+        with: { name: registry-remote-reports, path: _reports/*.json }
+      - name: Summary
+        run: |
+          echo "## Registry Validation" >> $GITHUB_STEP_SUMMARY
+          cat _reports/registry_validate.json | sed 's/^/    /' >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Remote Checks" >> $GITHUB_STEP_SUMMARY
+          for f in _reports/ai_*.json; do [ -f "$f" ] && echo "" && echo "### $f" && sed 's/^/    /' "$f" >> $GITHUB_STEP_SUMMARY; done
+          for f in _reports/jwks_*.json; do [ -f "$f" ] && echo "" && echo "### $f" && sed 's/^/    /' "$f" >> $GITHUB_STEP_SUMMARY; done
