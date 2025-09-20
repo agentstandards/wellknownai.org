@@ -1,0 +1,28 @@
+{
+  "generated_at": "2025-09-20T06:35:29.463Z",
+  "active_total": 4,
+  "ok_both": 4,
+  "pass_rate": 100,
+  "domains": [
+    {
+      "domain": "agentpki.org",
+      "ai_ok": true,
+      "jwks_ok": true
+    },
+    {
+      "domain": "agenturn.org",
+      "ai_ok": true,
+      "jwks_ok": true
+    },
+    {
+      "domain": "ai-manifest.org",
+      "ai_ok": true,
+      "jwks_ok": true
+    },
+    {
+      "domain": "wellknownai.org",
+      "ai_ok": true,
+      "jwks_ok": true
+    }
+  ]
+}
