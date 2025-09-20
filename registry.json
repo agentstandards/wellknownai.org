@@ -29,7 +29,7 @@
       "schemas.list",
       "urn:agent:skill:agenturn.org:reference.v1"
     ],
-    "status": "inactive"
+    "status": "active"
   },
   {
     "domain": "ai-manifest.org",
