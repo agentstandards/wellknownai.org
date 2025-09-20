@@ -9,6 +9,7 @@ table{border-collapse:collapse;width:100%}th,td{border:1px solid #e5e7eb;padding
 </style></head><body>
 
 <h1>WellKnownAI — Registry & Tools (MCP/agents.json compatible)</h1>
+<div class="badges"><a href="https://github.com/agentstandards/wellknownai.org/actions/workflows/validate-registry.yml"><img alt="Validate Registry" src="https://github.com/agentstandards/wellknownai.org/actions/workflows/validate-registry.yml/badge.svg"></a> <a href="https://github.com/agentstandards/wellknownai.org/actions/workflows/validate-registry-remote.yml"><img alt="Validate Registry (Schema + Remote)" src="https://github.com/agentstandards/wellknownai.org/actions/workflows/validate-registry-remote.yml/badge.svg"></a></div>
 <p>Goal: host AI Manifest field definitions, examples, and public snapshots.</p>
 <h2>AI Manifest (v0.1) — field quicklist</h2>
 <ul><li>manifest_version, provider, spec.openapi_url, spec.schemas[]</li>
@@ -39,4 +40,40 @@ paths:
             schema: { $ref: "#/components/schemas/SearchInput" }</code></pre>
 <div class="footer"><p>Last updated: <span id="d"></span></p></div>
 <script>document.getElementById('d').textContent=new Date().toISOString().slice(0,10);</script>
+
+<h2 id="getting-started">5 分钟上手（服务方）</h2>
+<ol>
+  <li>在你的域名下新增 <code>/.well-known/ai.json</code>（最小示例）：
+    <pre><code>{
+  "manifest_version": "0.1",
+  "provider": { "name": "Your Inc.", "homepage": "https://your-domain" },
+  "spec": { "schemas": ["https://your-domain/schemas/YourSchema.json"] },
+  "servers": [{ "type": "rest", "url": "https://api.your-domain" }],
+  "capabilities": ["schemas.list", "urn:agent:skill:your-domain:example.v1"],
+  "auth": { "jwks_uri": "https://your-domain/.well-known/jwks.json", "schemes": ["bearer"] }
+}</code></pre>
+  </li>
+  <li>发布 JWKS：<code>/.well-known/jwks.json</code>（占位示例；生产请使用真实公钥）：
+    <pre><code>{
+  "keys": [{
+    "kty": "RSA",
+    "kid": "2025-01-01-rsa",
+    "use": "sig",
+    "alg": "RS256",
+    "n": "base64url...",
+    "e": "AQAB"
+  }]
+}</code></pre>
+  </li>
+  <li>（可选）发布 CRL：<code>/.well-known/ai-crl.json</code>，用于撤销/合规标记。</li>
+  <li>本地校验（使用本仓库提供的 CLI 脚本）：
+    <pre><code>node ai-manifest-kit/scripts/validate-ai.mjs --file .well-known/ai.json --out _reports/ai_local.json
+node ai-manifest-kit/scripts/validate-jwks.mjs --file .well-known/jwks.json --out _reports/jwks_local.json
+node ai-manifest-kit/scripts/validate-crl.mjs  --file .well-known/ai-crl.json --out _reports/crl_local.json</code></pre>
+  </li>
+  <li>CI 接入：本仓库已包含 validate-registry.yml / validate-registry-remote.yml，registry 变更会自动校验。</li>
+  <li>（可选）要加入公共目录，请在 wellknownai.org 仓库的 <code>registry.json</code> 提 PR，或参考页面上的“Registry Viewer”。</li>
+</ol>
+<p>注意：所有外链推荐使用 HTTPS，缓存建议设置 ETag / Last-Modified / Cache-Control: max-age=600+；JWKS 轮换使用 kid，先加后删，保持重叠窗口 ≥7 天。</p>
+
 </body></html>
