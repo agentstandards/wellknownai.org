@@ -1,0 +1,23 @@
+name: Registry sort fix (manual)
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Target branch to fix (PR head branch if edits allowed)'
+        required: true
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: ${{ github.event.inputs.branch }} }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Sort registry.json
+        run: node tools/sort_registry.mjs > registry.json
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore(registry): sort registry.json'
