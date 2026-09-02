@@ -48,6 +48,94 @@
     "status": "active"
   },
   {
+    "domain": "dephealth.dsh.sh",
+    "manifest": "https://dephealth.dsh.sh/.well-known/ai.json",
+    "jwks_uri": "https://dephealth.dsh.sh/.well-known/jwks.json",
+    "servers": [
+      {
+        "type": "mcp",
+        "url": "https://dephealth.dsh.sh/mcp"
+      }
+    ],
+    "capabilities": [
+      "package_health",
+      "deps_audit",
+      "runtime_eol",
+      "urn:agent:skill:dephealth.dsh.sh:dephealth.v1"
+    ],
+    "status": "active"
+  },
+  {
+    "domain": "findanmcp.com",
+    "manifest": "https://findanmcp.com/.well-known/ai.json",
+    "jwks_uri": "https://findanmcp.com/.well-known/jwks.json",
+    "servers": [
+      {
+        "type": "mcp",
+        "url": "https://findanmcp.com/mcp"
+      }
+    ],
+    "capabilities": [
+      "find_mcp",
+      "mcp_details",
+      "urn:agent:skill:findanmcp.com:mcpfinder.v1"
+    ],
+    "status": "active"
+  },
+  {
+    "domain": "llmstxtmcp.dev",
+    "manifest": "https://llmstxtmcp.dev/.well-known/ai.json",
+    "jwks_uri": "https://llmstxtmcp.dev/.well-known/jwks.json",
+    "servers": [
+      {
+        "type": "mcp",
+        "url": "https://llmstxtmcp.dev/mcp"
+      }
+    ],
+    "capabilities": [
+      "llms_index",
+      "llms_page",
+      "llms_search",
+      "urn:agent:skill:llmstxtmcp.dev:llms-txt.v1"
+    ],
+    "status": "active"
+  },
+  {
+    "domain": "rssfeedmcp.dev",
+    "manifest": "https://rssfeedmcp.dev/.well-known/ai.json",
+    "jwks_uri": "https://rssfeedmcp.dev/.well-known/jwks.json",
+    "servers": [
+      {
+        "type": "mcp",
+        "url": "https://rssfeedmcp.dev/mcp"
+      }
+    ],
+    "capabilities": [
+      "feed_find",
+      "feed_items",
+      "news_search",
+      "urn:agent:skill:rssfeedmcp.dev:rss-feed.v1"
+    ],
+    "status": "active"
+  },
+  {
+    "domain": "waybackmcp.com",
+    "manifest": "https://waybackmcp.com/.well-known/ai.json",
+    "jwks_uri": "https://waybackmcp.com/.well-known/jwks.json",
+    "servers": [
+      {
+        "type": "mcp",
+        "url": "https://waybackmcp.com/mcp"
+      }
+    ],
+    "capabilities": [
+      "archived_copy",
+      "capture_history",
+      "urn:agent:skill:waybackmcp.com:wayback-machine.v1"
+    ],
+    "status": "active"
+  },
+  {
     "domain": "wellknownai.org",
     "manifest": "https://wellknownai.org/.well-known/ai.json",
     "jwks_uri": "https://wellknownai.org/.well-known/jwks.json",
