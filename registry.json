@@ -111,8 +111,8 @@
       }
     ],
     "capabilities": [
-      "feed_find",
       "feed_items",
+      "feed_find",
       "news_search",
       "urn:agent:skill:rssfeedmcp.dev:rss-feed.v1"
     ],
