@@ -48,6 +48,22 @@
     "status": "active"
   },
   {
+    "domain": "viggisfoodtrucks.com",
+    "manifest": "https://viggisfoodtrucks.com/.well-known/ai.json",
+    "jwks_uri": "https://viggisfoodtrucks.com/.well-known/jwks.json",
+    "servers": [
+      {
+        "type": "rest",
+        "url": "https://viggisfoodtrucks.com"
+      }
+    ],
+    "capabilities": [
+      "agent_apply",
+      "urn:agent:skill:viggisfoodtrucks.com:philobot-apply.v1"
+    ],
+    "status": "inactive"
+  },
+  {
     "domain": "wellknownai.org",
     "manifest": "https://wellknownai.org/.well-known/ai.json",
     "jwks_uri": "https://wellknownai.org/.well-known/jwks.json",
